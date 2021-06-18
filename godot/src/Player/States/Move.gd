@@ -21,7 +21,6 @@ func unhandled_input(event: InputEvent) -> void:
 
 func physics_process(delta: float) -> void:
 	var input_direction: = get_input_direction()
-
 	# Calculate a move direction vector relative to the camera
 	# The basis stores the (right, up, -forwards) vectors of our camera.
 	var forwards: Vector3 = player.camera.global_transform.basis.z * input_direction.z
@@ -31,6 +30,13 @@ func physics_process(delta: float) -> void:
 		move_direction = move_direction.normalized()
 	move_direction.y = 0
 	skin.move_direction = move_direction
+	if skin.right_fist_hit and skin._playback.get_current_node() == "fight_punch":
+		print('fight with right fist')
+		player.move_and_slide(100*player.global_transform.basis.z)
+	elif skin.head_hit:
+		print('head hit')
+		player.move_and_slide(-20*move_direction)
+
 
 	# Rotation
 	if move_direction:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://src/Player/Mannequiny.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://src/Player/States/Air.gd" type="Script" id=6]
 [ext_resource path="res://src/Player/States/Run.gd" type="Script" id=7]
 [ext_resource path="res://src/Player/Camera/CameraRig.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/Player/States/Fight.gd" type="Script" id=9]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=1]
 
@@ -16,10 +17,17 @@ radius = 0.25
 height = 1.25
 
 [node name="Player" type="KinematicBody"]
+collision_mask = 6
 script = ExtResource( 1 )
 
 [node name="Mannequiny" parent="." instance=ExtResource( 2 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0.222992 )
+
+[node name="BoneAttachment" parent="Mannequiny/root/Skeleton" index="1"]
+transform = Transform( 0.999897, -0.000343505, 0.0140891, 0.007, 0.879762, -0.475361, -0.0122312, 0.475413, 0.879676, -0.000638271, 1.51087, 0.2538 )
+
+[node name="BoneAttachment2" parent="Mannequiny/root/Skeleton" index="2"]
+transform = Transform( -0.668963, -0.120827, -0.733432, -0.378117, -0.79435, 0.475565, -0.639867, 0.595329, 0.485766, -0.264302, 1.0349, 0.327678 )
 
 [node name="AnimationTree" parent="Mannequiny" index="2"]
 parameters/playback = SubResource( 1 )
@@ -44,6 +52,9 @@ script = ExtResource( 6 )
 
 [node name="Run" type="Node" parent="StateMachine/Move"]
 script = ExtResource( 7 )
+
+[node name="Fight" type="Node" parent="StateMachine/Move"]
+script = ExtResource( 9 )
 
 [node name="CameraRig" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.38644, 0 )

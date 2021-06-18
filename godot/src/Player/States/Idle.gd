@@ -9,7 +9,9 @@ func unhandled_input(event: InputEvent) -> void:
 
 func physics_process(delta: float) -> void:
 	_parent.physics_process(delta)
-	if player.is_on_floor() and _parent.velocity.length() > 0.01:
+	if player.is_on_floor() and Input.is_action_pressed("fight"):
+		_state_machine.transition_to("Move/Fight")
+	elif player.is_on_floor() and _parent.velocity.length() > 0.01:
 		_state_machine.transition_to("Move/Run")
 	elif not player.is_on_floor():
 		_state_machine.transition_to("Move/Air")
